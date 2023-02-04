@@ -12,3 +12,42 @@
     text-align: center;
     width: 34px;
 }
+
+.square:hover {
+    background: #ccc;
+    cursor: pointer;
+}
+
+.status {
+    margin-bottom: 10px;
+    min-width: 120px;
+}
+
+.button {
+    border-radius: 7px;
+    border-width: 1px;
+    border-color: yellow;
+    margin: 0px;
+    padding: 0px;
+    min-width: 100px;
+    min-height: 25px;
+}
+
+.button:hover {
+    background: #ccc;
+    cursor: pointer;
+}
+
+.history-button-current-move {
+    background-color: #0000ff;
+    color: white;
+}
+
+.history-button-current-move:hover {
+    background-color: #5151fd;
+    color: white;
+}
+
+.reset-button {
+    margin-left: 30px;
+}
