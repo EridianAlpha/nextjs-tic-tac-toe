@@ -31,10 +31,6 @@ export default function Game() {
         setCurrentMove(nextHistory.length - 1)
     }
 
-    function jumpTo(nextMove: number) {
-        setCurrentMove(nextMove)
-    }
-
     function resetGame() {
         // Reset the board state
         setCurrentMove(0)
@@ -43,39 +39,19 @@ export default function Game() {
         setHistory([Array(9).fill(null)])
     }
 
-    const movesHistory = history.map((squares, move) => {
-        let description
-        if (move == 0) {
-            description = "Game start"
-        } else if (move == currentMove) {
-            description = "Current move"
-        } else {
-            description = "Go to move #" + move
-        }
-
-        let buttonStyles
-        if (move == currentMove) {
-            buttonStyles = styles["button"] + " " + styles["history-button-current-move"]
-        } else {
-            buttonStyles = styles["button"]
-        }
-
-        return (
-            <li key={move}>
-                <button className={buttonStyles} onClick={() => jumpTo(move)}>
-                    {description}
-                </button>
-            </li>
-        )
-    })
-
     return (
         <div className="game">
             <div className="game-board">
                 <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
             </div>
             <div className="game-info">
-                <ol>{movesHistory}</ol>
+                <ol>
+                    <MoveHistory
+                        history={history}
+                        currentMove={currentMove}
+                        setCurrentMove={setCurrentMove}
+                    />
+                </ol>
             </div>
             <button
                 className={styles["reset-button"] + " " + styles["button"]}
@@ -154,6 +130,51 @@ function Square({ value, onSquareClick }: { value: string | null; onSquareClick:
             {value}
         </button>
     )
+}
+
+function MoveHistory({
+    history,
+    currentMove,
+    setCurrentMove,
+}: {
+    history: any //TODO Check this when I have internet
+    currentMove: string | null
+    setCurrentMove: () => void
+}) {
+    function jumpTo(nextMove: number) {
+        setCurrentMove(nextMove)
+    }
+
+    // TODO "squares" apparently isn't used, but it obviously
+    // is I guess just by a different component?
+    // So I should find where it's used and comment back here
+    const moveHistory = history.map((squares, move) => {
+        let description
+        if (move == 0) {
+            description = "Game start"
+        } else if (move == currentMove) {
+            description = "Current move"
+        } else {
+            description = "Go to move #" + move
+        }
+
+        let buttonStyles
+        if (move == currentMove) {
+            buttonStyles = styles["button"] + " " + styles["history-button-current-move"]
+        } else {
+            buttonStyles = styles["button"]
+        }
+
+        return (
+            <li key={move}>
+                <button className={buttonStyles} onClick={() => jumpTo(move)}>
+                    {description}
+                </button>
+            </li>
+        )
+    })
+
+    return <>{moveHistory}</>
 }
 
 function calculateWinner(squares: (string | null)[]) {
