@@ -137,18 +137,16 @@ function MoveHistory({
     currentMove,
     setCurrentMove,
 }: {
-    history: any //TODO Check this when I have internet
-    currentMove: string | null
-    setCurrentMove: () => void
+    history: (string | null)[][]
+    currentMove: number | null
+    setCurrentMove: (nextMove: number) => void
 }) {
     function jumpTo(nextMove: number) {
         setCurrentMove(nextMove)
     }
 
-    // TODO "squares" apparently isn't used, but it obviously
-    // is I guess just by a different component?
-    // So I should find where it's used and comment back here
-    const moveHistory = history.map((squares, move) => {
+    // _arrayIndex isn't used but is required by the map function as move is the second parameter
+    const moveHistory = history.map((_arrayIndex, move) => {
         let description
         if (move == 0) {
             description = "Game start"
